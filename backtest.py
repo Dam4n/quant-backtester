@@ -41,14 +41,15 @@ def plot_signals(df, strategy_choice):
         buy_signals = df[(df['Signal_Change'] == 1) & (df['Signal'] == 1)]
         sell_signals = df[(df['Signal_Change'] == -1) & (df['Signal'] == -1)]
 
-        plt.plot(df.index, df['Upper_Band'], label='Upper Band', linestyle='--', color='orange')
+        plt.plot(df.index, df['Upper_Band'], label='Upper Band', linestyle='--', color='purple')
         plt.plot(df.index, df['Lower_Band'], label='Lower Band', linestyle='--', color='orange')
     elif strategy_choice == 'pairs':
         df['Signal_Change'] = df['Signal'].diff()
         buy_signals = df[df['Signal_Change'] == 1]
         sell_signals = df[df['Signal_Change'] == -1]
-    else:
-        return  # No signals to plot for buy-and-hold
+    elif strategy_choice == 'buy_and_hold':
+        buy_signals = df.iloc[[0]]
+        sell_signals = df.iloc[[]]
 
     plt.scatter(buy_signals.index, buy_signals['Close'], label='Buy Signal', marker='^', color='green', s=100)
     plt.scatter(sell_signals.index, sell_signals['Close'], label='Sell Signal', marker='v', color='red', s=100)
@@ -131,7 +132,10 @@ def main():
         title = f"{args.ticker} - {strategy_title} Strategy with Signals"
     plt.title(title)
     plt.xlabel("Date")
-    plt.ylabel("Price")
+    if args.strategy == 'pairs':
+        plt.ylabel(f"Spread: {args.ticker} - {args.pair_ticker}")
+    else:
+        plt.ylabel("Price")
     plt.legend()
     plt.grid(True)
     valid_range = df.dropna(subset=['Close']).index
