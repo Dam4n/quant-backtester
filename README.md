@@ -151,6 +151,8 @@ These simplifications are intentional and allow for controlled experimentation w
 
 ## Contributing
 
+Contributions welcome! Submit a pull request, file an issue, or fork the project.
+
 ---
 
 ## Future Extensions
