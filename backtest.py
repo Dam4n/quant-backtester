@@ -71,6 +71,7 @@ def main():
                         help='Window size for Bollinger Bands (default: 20)')
     parser.add_argument('--bollinger-std', type=float, default=2.0,
                         help='Standard deviation multiplier for Bollinger Bands (default: 2.0)')
+    parser.add_argument('--cost-bps', type=float, default=0.001, help='Transaction cost per trade (e.g. 0.001 = 10 bps)')
 
     args = parser.parse_args()
 
@@ -101,7 +102,7 @@ def main():
         df = pairs_trading_strategy(df1, df2)
 
     print("Simulating trades...")
-    df = simulate_trades(df, initial_cash=args.initial_cash)
+    df = simulate_trades(df, initial_cash=args.initial_cash, cost_bps=args.cost_bps)
 
     print("Calculating performance metrics...")
     metrics = calculate_performance_metrics(df)

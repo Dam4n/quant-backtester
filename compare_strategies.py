@@ -53,6 +53,7 @@ def main():
     parser.add_argument('--rsi-upper', type=int, default=70, help='RSI sell threshold')
     parser.add_argument('--bollinger-window', type=int, default=20)
     parser.add_argument('--bollinger-std', type=float, default=2.0)
+    parser.add_argument('--cost-bps', type=float, default=0.001, help='Transaction cost per trade (e.g. 0.001 = 10 bps)')
 
     args = parser.parse_args()
 
@@ -88,7 +89,7 @@ def main():
         print(f"\nRunning {name} strategy...")
         df = df_main.copy()
         df = strategy_func(df)
-        df = simulate_trades(df, initial_cash=args.initial_cash)
+        df = simulate_trades(df, initial_cash=args.initial_cash, cost_bps=args.cost_bps)
 
         metrics = calculate_performance_metrics(df)
         results[name] = df

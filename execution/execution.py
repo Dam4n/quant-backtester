@@ -1,4 +1,4 @@
-def simulate_trades(df, initial_cash=10000):
+def simulate_trades(df, initial_cash=10000, cost_bps=0.001):
     """
     Simulate trades based on signal column in DataFrame.
 
@@ -19,10 +19,14 @@ def simulate_trades(df, initial_cash=10000):
         signal = row['Signal']
 
         if signal == 1 and position == 0:
-            position = cash / price
+            notional = cash
+            cost = notional * cost_bps
+            position = (cash - cost) / price
             cash = 0
         elif signal == -1 and position > 0:
-            cash = position * price
+            notional = position * price
+            cost = notional * cost_bps
+            cash = notional - cost
             position = 0
 
         portfolio_value = cash + (position * price)

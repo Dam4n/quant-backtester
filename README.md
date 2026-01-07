@@ -82,6 +82,18 @@ Adjust parameters using command-line arguments:
 - Portfolio value line chart overlaid on time axis.
 - Console output of performance metrics including total return, Sharpe ratio, and max drawdown.
 
+## Modeling Assumptions & Limitations
+
+This backtester is designed for strategy research and relative performance comparison rather than live trading deployment. Key assumptions include:
+
+- Trades are executed immediately at observed market prices without modeling intraday price movement.
+- Transaction costs are modeled as a fixed basis-point fee applied to the traded notional on both entry and exit.
+- Slippage, market impact, and order book dynamics are not explicitly modeled.
+- Sufficient market liquidity is assumed to fill trades at the desired size.
+- Corporate actions and intraday microstructure effects are not considered.
+
+These simplifications are intentional and allow for controlled experimentation while highlighting the sensitivity of different strategies to trading frictions.
+
 ## Contributing
 
 Contributions welcome! Submit a pull request, file an issue, or fork the project.
